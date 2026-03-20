@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Ángel Olmedo · RF & Microwave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --white: #fafaf9; --off: #f2f1ef; --rule: #e2e0dc;
+    --muted: #9b9890; --ink: #1a1917;
+    --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; background: rgba(250,250,249,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .nav-brand { font-family: var(--mono); font-size: 13px; color: var(--ink); text-decoration: none; }
+  .nav-brand span { color: var(--muted); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  nav a:hover, nav a.active { color: var(--ink); }
+
+  /* PAGE HEADER */
+  .page-header { padding: 120px 48px 48px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: flex-end; }
+  .page-header-left { }
+  .page-tag { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .page-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--muted); }
+  h1 { font-family: var(--sans); font-weight: 300; font-size: clamp(36px, 4vw, 56px); letter-spacing: -0.02em; line-height: 1.08; }
+  .page-count { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* PROJECT LIST */
+  .project-list { padding: 0 48px; }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .project-row:first-child { border-top: 1px solid var(--rule); }
+  .project-row:hover { background: var(--off); }
+  .project-row:hover .project-visual img,
+  .project-row:hover .project-visual .gif-wrap { opacity: 1; }
+
+  /* VISUAL */
+  .project-visual {
+    border-right: 1px solid var(--rule);
+    overflow: hidden;
+    position: relative;
+    background: #111;
+    height: 280px;
+  }
+  .project-visual img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.85; transition: opacity 0.3s;
+    display: block;
+  }
+  .project-visual .gif-wrap {
+    width: 100%; height: 100%;
+    opacity: 0.85; transition: opacity 0.3s;
+    overflow: hidden;
+  }
+  .project-visual .gif-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .project-visual .vis-label {
+    position: absolute; bottom: 12px; left: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+    background: rgba(0,0,0,0.4); padding: 4px 8px;
+  }
+  .project-visual.static { background: var(--off); }
+  .project-visual.static img { opacity: 1; filter: none; }
+
+  /* INFO */
+  .project-info { padding: 36px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+  .project-info-top { }
+  .project-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .project-freq-tag { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .project-name { font-family: var(--sans); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; margin-bottom: 14px; line-height: 1.2; }
+  .project-desc { font-size: 14px; font-weight: 300; color: #4a4845; line-height: 1.75; max-width: 480px; }
+  .project-info-bottom { }
+  .project-specs { display: flex; gap: 0; margin-top: 28px; border-top: 1px solid var(--rule); }
+  .spec { flex: 1; padding: 14px 0 0; border-right: 1px solid var(--rule); padding-right: 20px; margin-right: 20px; }
+  .spec:last-child { border-right: none; }
+  .spec-key { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .spec-val { font-family: var(--mono); font-size: 13px; font-weight: 400; color: var(--ink); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--rule); padding: 3px 8px; }
+  .arrow-hint { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 16px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.06em; transition: gap 0.2s; }
+  .project-row:hover .arrow-hint { gap: 12px; color: var(--ink); }
+
+  /* EXPANDED DETAIL */
+  .project-detail { display: none; grid-column: 1 / -1; background: var(--off); border-top: 1px solid var(--rule); padding: 40px 48px; }
+  .project-row.open .project-detail { display: block; }
+  .detail-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .detail-block h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .detail-block p, .detail-block li { font-size: 13px; font-weight: 300; color: #3a3835; line-height: 1.75; }
+  .detail-block ul { padding-left: 16px; }
+  .detail-block li + li { margin-top: 4px; }
+  .detail-images { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .detail-img-wrap p { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .detail-img-wrap img { width: 100%; border: 1px solid var(--rule); display: block; }
+
+  /* FOOTER */
+  footer { padding: 40px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+  .footer-name { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .footer-note { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .page-header { animation: fadeUp 0.5s ease forwards; }
+  .project-row { opacity: 0; animation: fadeUp 0.5s ease forwards; }
+  .project-row:nth-child(1) { animation-delay: 0.1s; }
+  .project-row:nth-child(2) { animation-delay: 0.2s; }
+  .project-row:nth-child(3) { animation-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .page-header { padding: 100px 24px 36px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .project-list { padding: 0 24px; }
+    .project-row { grid-template-columns: 1fr; }
+    .project-visual { height: 220px; border-right: none; border-bottom: 1px solid var(--rule); }
+    .project-info { padding: 24px 0; }
+    .project-detail { padding: 28px 24px; }
+    .detail-inner { grid-template-columns: 1fr; gap: 24px; }
+    .detail-images { grid-template-columns: 1fr; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">A.Olmedo <span>/ RF Eng.</span></a>
+  <ul>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <p class="page-tag">RF & Microwave Systems</p>
+    <h1>Projects</h1>
+  </div>
+  <span class="page-count">02 completed · 01 in progress</span>
+</div>
+
+<div class="project-list">
+
+  <!-- PROJECT 01: Patch Antenna -->
+  <div class="project-row" onclick="toggleRow(this)">
+    <div class="project-visual">
+      <div class="gif-wrap">
+        <img src="assets/patch-2c4/campo_E_patch.gif" alt="E-field animation patch antenna">
+      </div>
+      <span class="vis-label">E-field · HFSS simulation</span>
+    </div>
+    <div class="project-info">
+      <div class="project-info-top">
+        <p class="project-num">01</p>
+        <p class="project-freq-tag">2.4 GHz · Wi-Fi antenna · Full-wave EM</p>
+        <h2 class="project-name">Microstrip Patch Antenna</h2>
+        <p class="project-desc">
+          Single-element microstrip patch antenna for IEEE 802.11b/g/n,
+          designed analytically using the transmission-line model and validated
+          with full-wave EM simulation in Ansys HFSS. Inset feed for direct 50 Ω matching.
+          Parametric optimisation of patch length and feed position.
+        </p>
+        <div class="project-tags">
+          <span class="tag">HFSS</span>
+          <span class="tag">Rogers RO4003C</span>
+          <span class="tag">Inset feed</span>
+          <span class="tag">Parametric sweep</span>
+          <span class="tag">TM₁₀ mode</span>
+        </div>
+      </div>
+      <div class="project-info-bottom">
+        <div class="project-specs">
+          <div class="spec">
+            <p class="spec-key">f₀</p>
+            <p class="spec-val">2.400 GHz</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">S11</p>
+            <p class="spec-val">−24.75 dB</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">BW (−10 dB)</p>
+            <p class="spec-val">~38 MHz</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">Gain</p>
+            <p class="spec-val">~7 dBi</p>
+          </div>
+        </div>
+        <p class="arrow-hint">→ Details</p>
+      </div>
+    </div>
+    <div class="project-detail">
+      <div class="detail-inner">
+        <div class="detail-block">
+          <h4>Design parameters</h4>
+          <ul>
+            <li>Substrate: Rogers RO4003C, εᵣ = 3.38</li>
+            <li>h = 1.6 mm, tan δ = 0.0027</li>
+            <li>W = 42.23 mm, L = 33.0 mm (HFSS-tuned)</li>
+            <li>Analytical L = 33.52 mm (Balanis model)</li>
+            <li>Inset feed: Li = 10.84 mm, Wf = 3.07 mm</li>
+            <li>Ground plane: 51.83 × 44.66 mm</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Simulation results</h4>
+          <ul>
+            <li>S11 = −24.75 dB at 2.400 GHz ✓</li>
+            <li>BW (−10 dB) ≈ 38 MHz (2.382–2.420 GHz)</li>
+            <li>Covers Wi-Fi channel 1 (2.401–2.423 GHz)</li>
+            <li>Peak gain ≈ 7 dBi (broadside)</li>
+            <li>TM₁₀ mode confirmed from E-field distribution</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Engineering insight</h4>
+          <p>The 0.52 mm difference between analytical and simulated patch length captures the effect of the inset feed slot on the effective resonant length — a parasitic effect invisible to the transmission-line model but fully resolved by the HFSS full-wave solver.</p>
+        </div>
+      </div>
+      <div class="detail-images">
+        <div class="detail-img-wrap">
+          <p>Top view — HFSS model</p>
+          <img src="assets/patch-2c4/top-view.png" alt="Top view">
+        </div>
+        <div class="detail-img-wrap">
+          <p>S11 — return loss</p>
+          <img src="assets/patch-2c4/patch-S11.png" alt="S11">
+        </div>
+        <div class="detail-img-wrap">
+          <p>Isometric view</p>
+          <img src="assets/patch-2c4/iso-view.png" alt="Iso view">
+        </div>
+        <div class="detail-img-wrap">
+          <p>E-field distribution — TM₁₀ mode</p>
+          <img src="assets/patch-2c4/campo_E_patch.gif" alt="E-field">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 02: Rat-Race -->
+  <div class="project-row" onclick="toggleRow(this)">
+    <div class="project-visual">
+      <img src="assets/rat-race-2c4/campo_J_rr.gif" alt="Rat-race coupler simulation"
+           onerror="this.style.display='none'; this.parentElement.querySelector('.fallback').style.display='flex'">
+      <div class="fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:#111;">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase;">GIF coming soon</span>
+      </div>
+      <span class="vis-label">HFSS simulation · 2.4 GHz</span>
+    </div>
+    <div class="project-info">
+      <div class="project-info-top">
+        <p class="project-num">02</p>
+        <p class="project-freq-tag">2.4 GHz · Hybrid coupler · Full-wave EM</p>
+        <h2 class="project-name">Rat-Race Coupler</h2>
+        <p class="project-desc">
+          Four-port 180° hybrid coupler enabling sum (Σ) and difference (Δ) signal operations.
+          Full-wave electromagnetic simulation in Ansys HFSS on Taconic TLX-8 substrate,
+          capturing coupling effects, discontinuities and radiation losses.
+          Core building block in radar front-ends and beamforming networks.
+        </p>
+        <div class="project-tags">
+          <span class="tag">HFSS</span>
+          <span class="tag">Taconic TLX-8</span>
+          <span class="tag">180° hybrid</span>
+          <span class="tag">Σ/Δ operation</span>
+          <span class="tag">Full-wave EM</span>
+        </div>
+      </div>
+      <div class="project-info-bottom">
+        <div class="project-specs">
+          <div class="spec">
+            <p class="spec-key">f₀</p>
+            <p class="spec-val">2.4 GHz</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">S11 min</p>
+            <p class="spec-val">−33.3 dB</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">S21</p>
+            <p class="spec-val">−3.0 dB</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">Substrate</p>
+            <p class="spec-val">TLX-8</p>
+          </div>
+        </div>
+        <p class="arrow-hint">→ Details</p>
+      </div>
+    </div>
+    <div class="project-detail">
+      <div class="detail-inner">
+        <div class="detail-block">
+          <h4>Design specifications</h4>
+          <ul>
+            <li>f₀ = 2.4 GHz</li>
+            <li>Substrate: Taconic TLX-8, εᵣ = 2.55</li>
+            <li>h = 0.78 mm, t = 32 µm</li>
+            <li>Reference impedance Z₀ = 50 Ω</li>
+            <li>Ring circumference: 1.5λg</li>
+            <li>Branch impedance: Z₀√2 = 70.71 Ω</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Simulation results</h4>
+          <ul>
+            <li>S11 = −33.3 dB at 2.340 GHz (minimum)</li>
+            <li>S11 = −30.5 dB at 2.400 GHz</li>
+            <li>S21 = −3.03 dB at 2.4 GHz (insertion loss)</li>
+            <li>S13 ≈ −3 dB — balanced power split</li>
+            <li>Phase difference consistent with 180° hybrid</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Applications</h4>
+          <p>Rat-race couplers are core building blocks in radar front-ends, satellite payloads and beamforming networks. The Σ/Δ operation is fundamental in monopulse radar and balanced mixers.</p>
+        </div>
+      </div>
+      <div class="detail-images">
+        <div class="detail-img-wrap">
+          <p>Top view — HFSS model</p>
+          <img src="assets/rat-race-2c4/top-view.png" alt="Rat-race top view">
+        </div>
+        <div class="detail-img-wrap">
+          <p>S-parameters (S11, S21, S31, S41)</p>
+          <img src="assets/rat-race-2c4/rr-spar.png" alt="S-parameters">
+        </div>
+        <div class="detail-img-wrap">
+          <p>Isometric view</p>
+          <img src="assets/rat-race-2c4/iso-view.png" alt="Rat-race isometric">
+        </div>
+        <div class="detail-img-wrap">
+          <p>Surface current Jsurf — signal propagation</p>
+          <img src="assets/rat-race-2c4/campo_J_rr.gif" alt="Current distribution">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 03: Wilkinson -->
+  <div class="project-row" onclick="toggleRow(this)">
+    <div class="project-visual static">
+      <img src="assets/wilk-2c4/wilkinson-schematic.svg" alt="Wilkinson power divider schematic"
+           onerror="this.style.display='none'; this.parentElement.querySelector('.fallback').style.display='flex'">
+      <div class="fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:var(--off);">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase;">Screenshot coming soon</span>
+      </div>
+      <span class="vis-label" style="color:rgba(0,0,0,0.4); background:rgba(255,255,255,0.6);">RFSim99 schematic</span>
+    </div>
+    <div class="project-info">
+      <div class="project-info-top">
+        <p class="project-num">03</p>
+        <p class="project-freq-tag">2.4 GHz · Passive splitter · Circuit-level</p>
+        <h2 class="project-name">Wilkinson Power Divider</h2>
+        <p class="project-desc">
+          Equal-split two-way power divider designed using a hybrid modelling approach —
+          distributed quarter-wavelength transmission lines combined with lumped isolation
+          elements. Both distributed and lumped implementations simulated and compared in RFSim99.
+        </p>
+        <div class="project-tags">
+          <span class="tag">RFSim99</span>
+          <span class="tag">S-parameters</span>
+          <span class="tag">λ/4 lines</span>
+          <span class="tag">Lumped + distributed</span>
+          <span class="tag">Impedance matching</span>
+        </div>
+      </div>
+      <div class="project-info-bottom">
+        <div class="project-specs">
+          <div class="spec">
+            <p class="spec-key">f₀</p>
+            <p class="spec-val">2.404 GHz</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">S11</p>
+            <p class="spec-val">−49.3 dB</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">S21 = S31</p>
+            <p class="spec-val">−3.0 dB</p>
+          </div>
+          <div class="spec">
+            <p class="spec-key">Tool</p>
+            <p class="spec-val">RFSim99</p>
+          </div>
+        </div>
+        <p class="arrow-hint">→ Details</p>
+      </div>
+    </div>
+    <div class="project-detail">
+      <div class="detail-inner">
+        <div class="detail-block">
+          <h4>Design approach</h4>
+          <p>Quarter-wavelength transmission lines (Z₀ = 70.71 Ω) perform the required impedance transformation. A 100 Ω isolation resistor suppresses mutual coupling between output ports, enabling high port-to-port isolation at resonance.</p>
+        </div>
+        <div class="detail-block">
+          <h4>Key results</h4>
+          <ul>
+            <li>S11 = −49.3 dB at 2.404 GHz (distributed)</li>
+            <li>S21 = S31 ≈ −3.0 dB — balanced power split</li>
+            <li>High S23 isolation from isolation resistor</li>
+            <li>Lumped equivalent: S11 = −56.9 dB</li>
+            <li>Lumped model shows narrower bandwidth</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Engineering insight</h4>
+          <p>Comparing distributed and lumped implementations reveals the trade-off between circuit compactness and bandwidth. The distributed version shows sharper resonance; the lumped model is more compact but frequency-sensitive — illustrating why full-wave EM validation matters at microwave frequencies.</p>
+        </div>
+      </div>
+      <div class="detail-images">
+        <div class="detail-img-wrap">
+          <p>Circuit schematic — RFSim99</p>
+          <img src="assets/wilk-2c4/top-view.webp" alt="Wilkinson schematic">
+        </div>
+        <div class="detail-img-wrap">
+          <p>S11 &amp; S21 magnitude — distributed model</p>
+          <img src="assets/wilk-2c4/wilk-spar.webp" alt="S-parameters magnitude">
+        </div>
+        <div class="detail-img-wrap">
+          <p>S21 phase response</p>
+          <img src="assets/wilk-2c4/wilk-phase.webp" alt="S21 phase">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-name">Ángel Olmedo Martínez — RF & Microwave Systems</span>
+  <span class="footer-note">Universidad de Alicante · MSc Telecommunications</span>
+</footer>
+
+<script>
+  function toggleRow(row) {
+    row.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

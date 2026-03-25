@@ -149,7 +149,7 @@
     <p class="page-tag">RF & Microwave Systems</p>
     <h1>Projects</h1>
   </div>
-  <span class="page-count">02 completed · 01 in progress</span>
+  <span class="page-count">03 completed · 01 in development</span>
 </div>
 
 <div class="project-list">
@@ -355,7 +355,7 @@
   <!-- PROJECT 03: Wilkinson -->
   <div class="project-row" onclick="toggleRow(this)">
     <div class="project-visual static">
-      <img src="assets/wilk-2c4/wilkinson-schematic.svg" alt="Wilkinson power divider schematic"
+      <img src="assets/wilk-2c4/squema.png" alt="Wilkinson power divider schematic"
            onerror="this.style.display='none'; this.parentElement.querySelector('.fallback').style.display='flex'">
       <div class="fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:var(--off);">
         <span style="font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase;">Screenshot coming soon</span>
@@ -439,6 +439,110 @@
       </div>
     </div>
   </div>
+<!-- PROJECT 04: Antenna Tool -->
+<div class="project-row" onclick="toggleRow(this)">
+  <div class="project-visual static">
+    <img src="assets/calc-antenna/ui-antenna.png" alt="Antenna design tool interface">
+    <span class="vis-label" style="color:rgba(0,0,0,0.4); background:rgba(255,255,255,0.6);">MATLAB · App Designer</span>
+  </div>
+  <div class="project-info">
+    <div class="project-info-top">
+      <p class="project-num">04</p>
+      <p class="project-freq-tag">RF design tool · MATLAB · Analytical modelling</p>
+      <h2 class="project-name">Antenna Design Calculator</h2>
+      <p class="project-desc">
+        Interactive MATLAB application for analytical pre-design of microstrip antennas
+        before full-wave EM simulation in HFSS. Implements the Hammerstad
+        transmission-line model for patch antennas and standard λ/4 formulas for
+        monopoles — computing physical dimensions, effective permittivity, feed position,
+        estimated bandwidth and directivity from frequency and substrate parameters.
+        Includes real-time dynamic schematic with dimension annotations and substrate
+        validity checks (0.003λ ≤ h ≤ 0.05λ).
+      </p>
+      <div class="project-tags">
+        <span class="tag">MATLAB</span>
+        <span class="tag">App Designer</span>
+        <span class="tag">Hammerstad model</span>
+        <span class="tag">Patch antenna</span>
+        <span class="tag">Monopole</span>
+        <span class="tag">Pre-HFSS design</span>
+      </div>
+    </div>
+    <div class="project-info-bottom">
+      <div class="project-specs">
+        <div class="spec">
+          <p class="spec-key">v1.0 antennas</p>
+          <p class="spec-val">Patch · Monopole</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Inputs</p>
+          <p class="spec-val">f₀, εᵣ, h</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Outputs</p>
+          <p class="spec-val">W, L, BW, D, xf</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Status</p>
+          <p class="spec-val">In development</p>
+        </div>
+      </div>
+      <p class="arrow-hint">→ Details</p>
+    </div>
+  </div>
+
+  <div class="project-detail">
+    <div class="detail-inner">
+      <div class="detail-block">
+        <h4>Implemented models</h4>
+        <ul>
+          <li>Patch: Hammerstad W, εᵣ_eff, ΔL, L, feed position xf</li>
+          <li>Patch: BW estimation via radiation quality factor Qrad</li>
+          <li>Patch: validity check 0.003λ ≤ h ≤ 0.05λ with alert</li>
+          <li>Monopole: l = λ/4, lef = l/2, Rrad = 36.5 Ω, D = 5.15 dBi</li>
+          <li>Dynamic schematic with W, L and feed annotations</li>
+        </ul>
+      </div>
+      <div class="detail-block">
+        <h4>Engineering purpose</h4>
+        <p>
+          Bridges analytical RF design and full-wave EM simulation — computing
+          starting dimensions in seconds before opening HFSS. Reduces design
+          iteration time and builds intuition about parameter sensitivity:
+          how εᵣ affects patch size, how h trades off bandwidth against
+          surface wave losses, and how feed position controls input impedance.
+        </p>
+      </div>
+      <div class="detail-block">
+        <h4>Roadmap</h4>
+        <ul>
+          <li>v1.0 — Patch + Monopole (current)</li>
+          <li>v1.1 — Dipole (λ/2, input impedance, radiation pattern)</li>
+          <li>v1.2 — Horn antenna (aperture, gain vs. length)</li>
+          <li>v1.3 — Microstrip line (Z₀ → width, Wheeler formula)</li>
+          <li>v2.0 — Export to HFSS script (.vbs automation)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="detail-images">
+      <div class="detail-img-wrap">
+        <p>Patch tab — design parameters + schematic</p>
+        <img src="assets/calc-antenna/ui-antenna.png" alt="Main UI">
+      </div>
+      <div class="detail-img-wrap">
+        <p>Patch design example — 2.4 GHz, RO4003C</p>
+        <img src="assets/calc-antenna/patch-example.png" alt="Patch example">
+      </div>
+      <div class="detail-img-wrap">
+        <p>Monopole tab — λ/4 design + image theory</p>
+        <img src="assets/calc-antenna/monopole-example.png" alt="Monopole example">
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 </div>
 

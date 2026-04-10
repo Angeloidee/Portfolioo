@@ -360,7 +360,7 @@
       <div class="fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:var(--off);">
         <span style="font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase;">Screenshot coming soon</span>
       </div>
-      <span class="vis-label" style="color:rgba(0,0,0,0.4); background:rgba(255,255,255,0.6);">RFSim99 schematic</span>
+      <span class="vis-label" style="color:rgba(0,0,0,0.4); background:rgba(255,255,255,0.6);">Expected schematic</span>
     </div>
     <div class="project-info">
       <div class="project-info-top">
@@ -542,7 +542,116 @@
   </div>
 </div>
 
+<!-- PROJECT 05: Bandpass Filter -->
+<div class="project-row" onclick="toggleRow(this)">
+  <div class="project-visual static">
+    <img src="assets/filter-bpf/schematic.png" alt="Bandpass filter schematic"
+         onerror="this.style.display='none'; this.parentElement.querySelector('.fallback').style.display='flex'">
+    <div class="fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:var(--off);">
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase;">Image coming soon</span>
+    </div>
+    <span class="vis-label" style="color:rgba(0,0,0,0.4); background:rgba(255,255,255,0.6);">RFSim99 · Analytical design</span>
+  </div>
 
+  <div class="project-info">
+    <div class="project-info-top">
+      <p class="project-num">05</p>
+      <p class="project-freq-tag">Bandpass filter · Order 3 · RF circuit design</p>
+      <h2 class="project-name">Third-Order Bandpass Filter</h2>
+      <p class="project-desc">
+        Third-order bandpass filter designed from first principles using low-pass
+        prototype transformation and impedance scaling. Analytical design validated
+        at circuit level using RFSim99, including frequency response, insertion loss
+        and selectivity. Currently extending the design to full-wave EM implementation
+        in HFSS to evaluate distributed effects and layout-dependent behaviour.
+      </p>
+
+      <div class="project-tags">
+        <span class="tag">RFSim99</span>
+        <span class="tag">Filter design</span>
+        <span class="tag">Bandpass</span>
+        <span class="tag">S-parameters</span>
+        <span class="tag">Analytical synthesis</span>
+        <span class="tag">HFSS (ongoing)</span>
+      </div>
+    </div>
+
+    <div class="project-info-bottom">
+      <div class="project-specs">
+        <div class="spec">
+          <p class="spec-key">Order</p>
+          <p class="spec-val">3</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Type</p>
+          <p class="spec-val">Bandpass</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Method</p>
+          <p class="spec-val">LP → BP transform</p>
+        </div>
+        <div class="spec">
+          <p class="spec-key">Status</p>
+          <p class="spec-val">HFSS in progress</p>
+        </div>
+      </div>
+      <p class="arrow-hint">→ Details</p>
+    </div>
+  </div>
+
+  <div class="project-detail">
+    <div class="detail-inner">
+      <div class="detail-block">
+        <h4>Design approach</h4>
+        <ul>
+          <li>Low-pass prototype (g-values) transformed to bandpass response</li>
+          <li>Impedance scaling to 50 Ω system</li>
+          <li>Lumped element implementation for initial validation</li>
+          <li>Frequency response analysed via S-parameters (S21, S11)</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <h4>Simulation results</h4>
+        <ul>
+          <li>Bandpass response with defined center frequency and bandwidth</li>
+          <li>Insertion loss (S21) and return loss (S11) validated in RFSim99</li>
+          <li>Selectivity controlled by third-order response</li>
+          <li>Expected sharper roll-off compared to lower-order filters</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <h4>Engineering insight</h4>
+        <p>
+          Transitioning from lumped-element synthesis to distributed implementation
+          highlights the impact of parasitics, coupling and layout constraints at
+          microwave frequencies. This step is critical for bridging ideal circuit
+          behaviour and real-world RF hardware performance.
+        </p>
+      </div>
+    </div>
+
+    <div class="detail-images">
+      <div class="detail-img-wrap">
+        <p>Analytical schematic</p>
+        <img src="assets/bp-filter/esquema.png" alt="Filter schematic">
+      </div>
+      <div class="detail-img-wrap">
+        <p>RFSim99 implementation</p>
+        <img src="assets/bp-filter/rf-schematic.png" alt="RFSim design">
+      </div>
+      <div class="detail-img-wrap">
+        <p>Frequency response (S-parameters)</p>
+        <img src="assets/bp-filter/s-parameters.png" alt="S-parameters">
+      </div>
+        <div class="detail-img-wrap">
+        <p>Resonance (S-parameters)</p>
+        <img src="assets/bp-filter/resonance.png" alt="S-parameters">
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 
